@@ -1,0 +1,16 @@
+{
+  "name": "07-restserver",
+  "version": "0.0.1",
+  "description": "APIREST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "José Mendoza Vargas",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
