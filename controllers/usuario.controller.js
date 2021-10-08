@@ -7,8 +7,13 @@ const usuarioGET = (req, res=response) => {
 }
 
 const usuarioPOST = (req, res=response) => {
+
+    const body = req.body;
+
     res.json({
-        msg : 'POST API desde el Controlador' 
+        msg : 'POST API desde el Controlador',
+        body,
+        correo1: body.correos[1].email
     });
 }
 
