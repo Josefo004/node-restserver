@@ -1,8 +1,15 @@
-const {response} = require('express');
+const {response, request} = require('express');
 
-const usuarioGET = (req, res=response) => {
+const usuarioGET = (req = request, res=response) => {
+
+    //const query = req.query;
+    const {nombre = 'Sin Nombre', q, apikey} = req.query;
+
     res.json({
-        msg : 'GET API desde el Controlador' 
+        msg : 'GET API desde el Controlador',
+        nombre,
+        q,
+        apikey 
     });
 }
 
@@ -18,8 +25,12 @@ const usuarioPOST = (req, res=response) => {
 }
 
 const usuarioPUT = (req, res=response) => {
+
+    const id = req.params.id
+
     res.json({
-        msg : 'PUT API desde el Controlador' 
+        msg : 'PUT API desde el Controlador',
+        id
     });
 }
 
