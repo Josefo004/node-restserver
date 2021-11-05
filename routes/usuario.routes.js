@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { usuarioGET, usuarioPOST, usuarioPUT, usuarioDELETE, usuarioPATCH } = require('../controllers/usuario.controller');
+const { usuarioGET, 
+        usuarioPOST, 
+        usuarioPUT, 
+        usuarioDELETE, 
+        usuarioPATCH } = require('../controllers/usuario.controller');
+
 const router = Router();
 
 router.get('/', usuarioGET);

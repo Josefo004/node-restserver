@@ -13,7 +13,7 @@ const usuarioGET = (req = request, res=response) => {
     });
 }
 
-const usuarioPOST = (req, res=response) => {
+const usuarioPOST = (req=request, res=response) => {
 
     const body = req.body;
 
@@ -24,14 +24,15 @@ const usuarioPOST = (req, res=response) => {
     });
 }
 
-const usuarioPUT = (req, res=response) => {
+const usuarioPUT = (req=request, res=response) => {
 
-    const id = req.params.id
+    const id = req.params.id;
 
     res.json({
         msg : 'PUT API desde el Controlador',
         id
     });
+    
 }
 
 const usuarioDELETE = (req, res=response) => {
