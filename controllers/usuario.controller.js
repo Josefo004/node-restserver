@@ -1,6 +1,6 @@
 const {response, request} = require('express');
 const bcrypt = require('bcryptjs');
-const { validationResult } = require('express-validator');
+
 
 const Usuario = require('../models/usuario');
 
@@ -19,11 +19,6 @@ const usuarioGET = (req = request, res=response) => {
 
 const usuarioPOST = async (req=request, res=response) => {
 
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json(errors);
-    }
-
     const {nombre, correo, password, rol} = req.body;
     const usuario = new Usuario({nombre, correo, password, rol});
 
@@ -32,7 +27,7 @@ const usuarioPOST = async (req=request, res=response) => {
 
     if (existeEmail) {
         return res.status(400).json({
-            msg:'El correo ya existe'
+            msg:`El correo ${correo} ya existe`
         }); 
     }
 
