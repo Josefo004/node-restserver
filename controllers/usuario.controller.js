@@ -4,16 +4,30 @@ const bcrypt = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
 
-const usuarioGET = (req = request, res=response) => {
+const usuarioGET = async (req = request, res=response) => {
 
-    //const query = req.query;
-    const {nombre = 'Sin Nombre', q, apikey} = req.query;
+    const { limite = 5, desde = 0 } =  req.query;
+    const filtro = { estado: true }
+    /* 
+    const usuarios = await Usuario.find(filtro)
+        .skip(Number(desde))
+        .limit(Number(limite));
+
+    const total = await Usuario.countDocuments(filtro);
+    */
+
+    //Ejecutando promesas simultaneas
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments(filtro),
+        Usuario.find(filtro)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ]);
 
     res.json({
         msg : 'GET API desde el Controlador',
-        nombre,
-        q,
-        apikey 
+        total,
+        usuarios
     });
 }
 
@@ -65,9 +79,19 @@ const usuarioPUT = async(req=request, res=response) => {
     
 }
 
-const usuarioDELETE = (req, res=response) => {
+const usuarioDELETE = async(req=request, res=response) => {
+    const id = req.params.id;
+
+    //borramos fisicamente el registro (NO SE RECOMIENDA)
+    //const usuario = await Usuario.findByIdAndDelete(id);
+
+    //Borrado Logico de un registro
+    const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
+
     res.json({
-        msg : 'DELETE API desde el Controlador' 
+        msg : 'DELETE API desde el Controlador',
+        id,
+        usuario
     });
 }
 const usuarioPATCH = (req, res=response) => {
