@@ -23,13 +23,13 @@ const usuarioPOST = async (req=request, res=response) => {
     const usuario = new Usuario({nombre, correo, password, rol});
 
     //verificar si el correo existe
-    const existeEmail = await Usuario.findOne({correo});
+    /* const existeEmail = await Usuario.findOne({correo});
 
     if (existeEmail) {
         return res.status(400).json({
             msg:`El correo ${correo} ya existe`
         }); 
-    }
+    } */
 
     //encriptar contraseña
     const salt = bcrypt.genSaltSync();
@@ -44,13 +44,23 @@ const usuarioPOST = async (req=request, res=response) => {
     });
 }
 
-const usuarioPUT = (req=request, res=response) => {
+const usuarioPUT = async(req=request, res=response) => {
 
     const id = req.params.id;
+    const {_id, password, google, correo, ...resto} = req.body;
+
+    //validar contra base de datos ID
+    if (password){
+        //encriptar contraseña, 
+        const salt = bcrypt.genSaltSync();
+        resto.password = bcrypt.hashSync(password,salt);
+    }
+
+    const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
     res.json({
         msg : 'PUT API desde el Controlador',
-        id
+        usuario
     });
     
 }
