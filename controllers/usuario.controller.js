@@ -87,11 +87,12 @@ const usuarioDELETE = async(req=request, res=response) => {
 
     //Borrado Logico de un registro
     const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
-
+    const usuarioAutenticado = req.usuario;
     res.json({
         msg : 'DELETE API desde el Controlador',
         id,
-        usuario
+        usuario,
+        usuarioAutenticado
     });
 }
 const usuarioPATCH = (req, res=response) => {
