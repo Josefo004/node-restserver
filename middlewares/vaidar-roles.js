@@ -21,6 +21,19 @@ const esAdminRole = (req=request, res=response, next)=> {
 
 }
 
+const tieneRol = (...roles) => {
+  return (req=request, res=response, next) => {
+    //console.log(roles);
+    if (!roles.includes(req.usuario.rol)) {
+      return res.status(401).json({
+        msg:`Solo pueden borrar los usuarios con rol ${roles}`
+      });
+    }  
+    next();
+  };
+}
+
 module.exports = {
-  esAdminRole
+  esAdminRole,
+  tieneRol
 }
